@@ -18,6 +18,23 @@
         </nav>
     </header>
     <main>
+        <section id="introduction"></section>
+            <h2>Project Overview</h2>
+            <p>
+                This project uses reinforcement learning to optimize traffic light management at a single intersection. 
+                By leveraging the traffic simulation software SUMO and reinforcement learning algorithms, the goal was to reduce vehicle congestion, 
+                minimize waiting times, and improve overall traffic throughput within a simulated environment.
+            </p>
+            <h3>Python Libraries Used</h3>
+            <p>
+                The following Python libraries were used to implement and train the reinforcement learning model:
+            </p>
+            <ul>
+                <li><strong>Stable Baselines3:</strong> Used for getting access to reinforcement learning models </li>
+                <li><strong>sumo_rl:</strong> A library that integrates the SUMO traffic simulation with the Gymnasium framework, enabling the creation of a custom reinforcement learning environment.</li>
+            </ul>
+
+        </section>
         <section id="sumo-role">
             <h2>What is SUMO and Its Role in This Project?</h2>
             <p>
@@ -34,27 +51,77 @@
             <p>
                 The agent controlling the traffic lights was trained using Deep Q-Learning (DQN), a reinforcement learning algorithm. The environment captured traffic metrics such as:
             </p>
+            <h2>Why Deep Q-Learning ?</h2>
+            <li> A reinforcement learning agent built with a Deep Q-Network combines Q-learning and Deep neural networks to predict the expected return before making a decision. This enables the model to generalize well to unseen cases.</li>
             <ul>
                 <li>Lane density: The proportion of a lane occupied by vehicles.</li>
                 <li>Lane queue: The length of the queue of stationary vehicles in each lane.</li>
                 <li>Current traffic light state: Represented as a one-hot encoded vector.</li>
                 <li>Minimum green condition: A boolean ensuring traffic lights stay green for a minimum duration.</li>
             </ul>
-            <p>
-                The action space allowed the agent to switch traffic lights among four configurations:
+            <h3>Ensuring the Best Model</h3>
+            <p> 
+                Several versions of the DQN model were trained, each fine-tuned with different hyperparameter values to achieve the best performance. 
+                The evaluation focused on reducing cumulative vehicle waiting times while ensuring the agent’s policy was adaptable to varying traffic conditions. 
+                By systematically testing and analyzing each model’s performance, the most stable and efficient version was selected as the final model.
             </p>
-            <ul>
-                <li>North-South Advance</li>
-                <li>North-South Left Lane Advance</li>
-                <li>East-West Advance</li>
-                <li>East-West Left Lane Advance</li>
-            </ul>
-            <p>
-                The reward function encouraged the agent to minimize congestion by reducing cumulative vehicle waiting times at the intersection.
-            </p>
-            <p>
-                Several versions of the DQN model were trained, fine-tuning hyperparameters like learning rate, exploration rate, and buffer size to achieve optimal performance.
-            </p>
+            <h3>Hyperparameters Tested</h3>
+    <p>
+        The following hyperparameters were tested and adjusted to ensure the best performance:
+    </p>
+    <ul>
+        <li>
+            <strong>Learning rate (α):</strong> Controls how much the neural network weights are updated during training. 
+            A higher learning rate speeds up learning but may lead to instability, while a lower rate ensures convergence but slows progress.
+        </li>
+        <li>
+            <strong>Gamma (𝛾):</strong> Determines how much the agent values future rewards compared to immediate rewards. 
+            A high gamma emphasizes long-term planning, while a lower gamma prioritizes short-term benefits, better suited for fast-paced environments like traffic control.
+        </li>
+        <li>
+            <strong>Buffer size:</strong> The size of the replay buffer that stores past experiences for training. 
+            Larger buffers provide more diverse training data, while smaller buffers focus on recent events, improving adaptability.
+        </li>
+        <li>
+            <strong>Target Update Interval:</strong> Specifies how frequently the target network’s weights are updated. 
+            Aligning this interval with the length of an episode ensures consistent learning and improved policy stability.
+        </li>
+        <li>
+            <strong>Initial and Final Epsilon Value:</strong> Controls the balance between exploration and exploitation. 
+            A high initial epsilon encourages exploration at the start, while a lower final epsilon ensures the agent exploits the best-known policies later in training.
+        </li>
+        <li>
+            <strong>Exploration Fraction:</strong> Determines the percentage of total training steps over which the exploration rate is reduced from its initial to final value. 
+            A carefully chosen exploration fraction ensures the agent balances exploration and exploitation throughout the training process.
+        </li>
+        <h3>Code for Training the Model</h3>
+    <p>
+        Below is the Python code used to train the final DQN model:
+    </p>
+    <pre>
+<code>model = DQN(
+    "MlpPolicy",
+    env,
+    gamma=0.95,
+    learning_rate=0.0002,
+    buffer_size=100000,
+    batch_size=32,
+    target_update_interval=4000 / 5,  # Update target network every episode (agent acts every 5 simulation steps)
+    exploration_initial_eps=0.9,
+    exploration_final_eps=0.1, 
+    exploration_fraction=0.1,
+    tensorboard_log=logs_dir,
+    verbose=1
+)
+model.learn(total_timesteps=steps_per_episode * total_episodes, reset_num_timesteps=False, tb_log_name="DQN_tuned")</code>
+    </pre>
+    <p>
+        The above code defines the DQN model with the tuned hyperparameters and trains it on the custom environment. 
+        The training process was logged using TensorBoard for performance visualization.
+    </p>
+
+
+    </ul>
         </section>
         <section id="results">
             <h2>Results</h2>
