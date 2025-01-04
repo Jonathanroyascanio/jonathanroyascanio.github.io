@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Projects</title>
+    <title>Traffic Light Optimization with Reinforcement Learning</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
     <header>
-        <h1>My Projects</h1>
+        <h1>Traffic Light Optimization with Reinforcement Learning</h1>
         <nav>
             <ul>
                 <li><a href="../index.html">Home</a></li>
@@ -18,25 +18,58 @@
         </nav>
     </header>
     <main>
-        <section>
-            <h2>Featured Projects</h2>
-            <div class="project-list">
-                <div class="project">
-                    <h3>Project 1: Portfolio Website</h3>
-                    <p>A responsive portfolio website built with HTML, CSS, and JavaScript. Showcases my skills and projects.</p>
-                    <a href="https://github.com/username/portfolio" target="_blank">View on GitHub</a>
-                </div>
-                <div class="project">
-                    <h3>Project 2: Task Manager App</h3>
-                    <p>A web app for managing tasks efficiently, featuring drag-and-drop functionality and a beautiful UI.</p>
-                    <a href="https://github.com/username/task-manager" target="_blank">View on GitHub</a>
-                </div>
-                <div class="project">
-                    <h3>Project 3: Machine Learning Model</h3>
-                    <p>A Python-based predictive model for analyzing customer behavior using scikit-learn and pandas.</p>
-                    <a href="https://github.com/username/ml-model" target="_blank">View on GitHub</a>
-                </div>
-            </div>
+        <section id="sumo-role">
+            <h2>What is SUMO and Its Role in This Project?</h2>
+            <p>
+                SUMO (Simulation of Urban MObility) is an open-source traffic simulation software designed to model traffic scenarios and generate realistic traffic flows. 
+                In this project, SUMO played a critical role in simulating a single traffic intersection, where vehicles, traffic lights, and their interactions were modeled in a realistic environment.
+            </p>
+            <p>
+                The project utilized the <code>sumo_rl</code> library to integrate SUMO with the <code>Gymnasium</code> reinforcement learning framework, enabling the creation of a custom training environment. 
+                This environment represented traffic dynamics with a focus on the intersection’s traffic light control, which was the agent in our reinforcement learning model.
+            </p>
+        </section>
+        <section id="method">
+            <h2>Method Used</h2>
+            <p>
+                The agent controlling the traffic lights was trained using Deep Q-Learning (DQN), a reinforcement learning algorithm. The environment captured traffic metrics such as:
+            </p>
+            <ul>
+                <li>Lane density: The proportion of a lane occupied by vehicles.</li>
+                <li>Lane queue: The length of the queue of stationary vehicles in each lane.</li>
+                <li>Current traffic light state: Represented as a one-hot encoded vector.</li>
+                <li>Minimum green condition: A boolean ensuring traffic lights stay green for a minimum duration.</li>
+            </ul>
+            <p>
+                The action space allowed the agent to switch traffic lights among four configurations:
+            </p>
+            <ul>
+                <li>North-South Advance</li>
+                <li>North-South Left Lane Advance</li>
+                <li>East-West Advance</li>
+                <li>East-West Left Lane Advance</li>
+            </ul>
+            <p>
+                The reward function encouraged the agent to minimize congestion by reducing cumulative vehicle waiting times at the intersection.
+            </p>
+            <p>
+                Several versions of the DQN model were trained, fine-tuning hyperparameters like learning rate, exploration rate, and buffer size to achieve optimal performance.
+            </p>
+        </section>
+        <section id="results">
+            <h2>Results</h2>
+            <p>
+                The final version of the model (Tuned DQN V2) demonstrated significant improvements in traffic light optimization compared to a static traffic light policy. 
+                The results showed:
+            </p>
+            <ul>
+                <li>A reduction in average waiting time by approximately 27% compared to the static traffic light policy.</li>
+                <li>Stable and efficient control of traffic lights, even under randomized traffic scenarios.</li>
+                <li>Adaptability to varying traffic conditions, consistently minimizing peaks in waiting time.</li>
+            </ul>
+            <p>
+                These outcomes validate the hypothesis that reinforcement learning can effectively optimize traffic flow at intersections, significantly reducing congestion and improving throughput.
+            </p>
         </section>
     </main>
     <footer>
