@@ -126,19 +126,23 @@
     </ul>
         </section>
         <section id="results">
-            <h2>Results</h2>
+            <h3>Model Performance Evaluation</h3>
             <p>
-                The final version of the model (Tuned DQN V2) demonstrated significant improvements in traffic light optimization compared to a static traffic light policy. 
-                The results showed:
+                The final decision on the best model was made by analyzing performance metrics, such as mean reward and loss function, across multiple trained models.
+                TensorBoard was used to monitor these metrics during training, providing valuable insights into the model's learning progress and stability.
+                Promising results from the chosen model were further validated by comparing its performance to a conventional cyclic light control algorithm.
             </p>
-            <ul>
-                <li>A reduction in average waiting time by approximately 27% compared to the static traffic light policy.</li>
-                <li>Stable and efficient control of traffic lights, even under randomized traffic scenarios.</li>
-                <li>Adaptability to varying traffic conditions, consistently minimizing peaks in waiting time.</li>
-            </ul>
-            <p>
-                These outcomes validate the hypothesis that reinforcement learning can effectively optimize traffic flow at intersections, significantly reducing congestion and improving throughput.
-            </p>
+            <div class="tensorboard-graphs">
+                <figure>
+                    <img src="static/mean_reward.png" alt="Mean reward per episode">
+                    <figcaption>Figure 1: Mean reward per episode. The model converges on a policy that maximizes traffic throughput.</figcaption>
+                </figure>
+                <figure>
+                    <img src="static/loss_function.png" alt="Loss function results per episode">
+                    <figcaption>Figure 2: Loss function results per episode. A steady decrease indicates stable and consistent learning.</figcaption>
+                </figure>
+            </div>
+            
         </section>
     </main>
     <footer>
