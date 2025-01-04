@@ -43,21 +43,21 @@
             </p>
             <p>
                 The project utilized the <code>sumo_rl</code> library to integrate SUMO with the <code>Gymnasium</code> reinforcement learning framework, enabling the creation of a custom training environment. 
-                This environment represented traffic dynamics with a focus on the intersection’s traffic light control, which was the agent in our reinforcement learning model.
             </p>
         </section>
         <section id="method">
             <h2>Method Used</h2>
             <p>
-                The agent controlling the traffic lights was trained using Deep Q-Learning (DQN), a reinforcement learning algorithm. The environment captured traffic metrics such as:
+                The agent controlling the traffic lights was trained using Deep Q-Learning (DQN), a reinforcement learning algorithm. 
             </p>
             <h2>Why Deep Q-Learning ?</h2>
-            <li> A reinforcement learning agent built with a Deep Q-Network combines Q-learning and Deep neural networks to predict the expected return before making a decision. This enables the model to generalize well to unseen cases.</li>
+            <li> A reinforcement learning agent built with a Deep Q-Network combines Q-learning and Deep neural networks to predict the expected return before making a decision, which enables the model to generalize well to unseen cases.</li>
+            <h3> Metrics used to calculate the reward used for the training phase</h3>
             <ul>
-                <li>Lane density: The proportion of a lane occupied by vehicles.</li>
-                <li>Lane queue: The length of the queue of stationary vehicles in each lane.</li>
-                <li>Current traffic light state: Represented as a one-hot encoded vector.</li>
-                <li>Minimum green condition: A boolean ensuring traffic lights stay green for a minimum duration.</li>
+                <li><strong>Lane density </strong>: The proportion of a lane occupied by vehicles.</li>
+                <li><strong>Lane queue </strong>: The length of the queue of stationary vehicles in each lane.</li>
+                <li><strong>Current traffic light state </strong>: Represented as a one-hot encoded vector.</li>
+                <li><strong>Minimum green condition </strong>: A boolean ensuring traffic lights stay green for a minimum duration.</li>
             </ul>
             <h3>Ensuring the Best Model</h3>
             <p> 
@@ -72,19 +72,16 @@
     <ul>
         <li>
             <strong>Learning rate (α):</strong> Controls how much the neural network weights are updated during training. 
-            A higher learning rate speeds up learning but may lead to instability, while a lower rate ensures convergence but slows progress.
         </li>
         <li>
             <strong>Gamma (𝛾):</strong> Determines how much the agent values future rewards compared to immediate rewards. 
-            A high gamma emphasizes long-term planning, while a lower gamma prioritizes short-term benefits, better suited for fast-paced environments like traffic control.
         </li>
         <li>
             <strong>Buffer size:</strong> The size of the replay buffer that stores past experiences for training. 
-            Larger buffers provide more diverse training data, while smaller buffers focus on recent events, improving adaptability.
+            Larger buffers provide more diverse training data, while smaller buffers focus on recent events.
         </li>
         <li>
             <strong>Target Update Interval:</strong> Specifies how frequently the target network’s weights are updated. 
-            Aligning this interval with the length of an episode ensures consistent learning and improved policy stability.
         </li>
         <li>
             <strong>Initial and Final Epsilon Value:</strong> Controls the balance between exploration and exploitation. 
@@ -92,7 +89,6 @@
         </li>
         <li>
             <strong>Exploration Fraction:</strong> Determines the percentage of total training steps over which the exploration rate is reduced from its initial to final value. 
-            A carefully chosen exploration fraction ensures the agent balances exploration and exploitation throughout the training process.
         </li>
         <h3>Code for Training the Model</h3>
     <p>
@@ -113,16 +109,15 @@
     tensorboard_log=logs_dir,
     verbose=1
 )
-model.learn(total_timesteps=steps_per_episode * total_episodes, reset_num_timesteps=False, tb_log_name="DQN_tuned")</code>
     </pre>
     <p>
-        The above code defines the DQN model with the tuned hyperparameters and trains it on the custom environment. 
+        The above code defines the DQN model chosen and its tuned hyperparameters. 
         The training process was logged using TensorBoard for performance visualization and the training process can be visualized via SUMO.
     </p>
     <div class="simulation-gif">
         <figure>
             <img src="static/simulation_footage.gif" alt="Traffic light optimization simulation footage">
-            <figcaption>Figure: Simulation footage of optimized traffic lights in action.</figcaption>
+            <figcaption>Figure: Simulation footage of the model in training.</figcaption>
         </figure>
     </div>
     </section>
