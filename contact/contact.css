@@ -89,15 +89,6 @@ ul li {
     font-size: 1.1rem;
 }
 
-ul li a {
-    color: #007BFF;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-ul li a:hover {
-    color: #0056b3;
-}
 
 /* Footer Styling */
 footer {
